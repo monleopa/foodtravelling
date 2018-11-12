@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 11, 2018 lúc 07:39 AM
+-- Thời gian đã tạo: Th10 12, 2018 lúc 01:57 PM
 -- Phiên bản máy phục vụ: 10.1.36-MariaDB
 -- Phiên bản PHP: 7.2.10
 
@@ -68,7 +68,47 @@ INSERT INTO `comment` (`comment_id`, `comment_content`, `comment_post_id`, `comm
 (2, 'hm', 23, '1', 'ducanh'),
 (3, 'helllo hihi', 23, '1', 'ducanh'),
 (6, 'Dep qua nhi', 33, '1', 'ducanh'),
-(7, 'Hihi', 33, '31', 'hongnhung');
+(7, 'Hihi', 33, '31', 'hongnhung'),
+(8, 'ngon khong ?', 32, '1', 'ducanh'),
+(9, 'đẹp nha', 33, '0', 'hailinh');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `liked`
+--
+
+CREATE TABLE `liked` (
+  `user_id` int(50) NOT NULL,
+  `post_id` int(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `liked`
+--
+
+INSERT INTO `liked` (`user_id`, `post_id`) VALUES
+(1, 23),
+(1, 24),
+(1, 26),
+(1, 29),
+(1, 30),
+(1, 31),
+(1, 33),
+(2, 23),
+(2, 24),
+(2, 26),
+(2, 33),
+(3, 23),
+(3, 26),
+(3, 29),
+(3, 30),
+(3, 31),
+(3, 33),
+(31, 23),
+(31, 29),
+(31, 32),
+(31, 33);
 
 -- --------------------------------------------------------
 
@@ -123,10 +163,14 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`user_id`, `user_name`, `user_password`, `email`, `admin`) VALUES
 (1, 'ducanh', '81dc9bdb52d04dc20036dbd8313ed055', 'ducanh7897@gmail.com', 1),
 (2, 'baphuong', '81dc9bdb52d04dc20036dbd8313ed055', 'baphuong@gmail.com', 2),
-(3, 'Cong Son', '81dc9bdb52d04dc20036dbd8313ed055', 'congson@gmail.com', 1),
+(3, 'Cong Son', '81dc9bdb52d04dc20036dbd8313ed055', 'congson@gmail.com', 2),
 (29, 'philinhlinh', '81dc9bdb52d04dc20036dbd8313ed055', 'philinh@gmail.com', 2),
 (30, 'duonglinhtrang', '81dc9bdb52d04dc20036dbd8313ed055', 'tranglinh@gmail.com', 2),
-(31, 'hongnhung', '81dc9bdb52d04dc20036dbd8313ed055', 'hongnhung@gmail.com', 2);
+(31, 'hongnhung', '81dc9bdb52d04dc20036dbd8313ed055', 'hongnhung@gmail.com', 2),
+(32, 'handaik97', '0be27b6bc72d6924bfa29a44e38c1035', 'handaik97@gmail.com', 2),
+(33, 'toilahan97', '552114b824ac808236e41ee6a078267a', 'toilahan97@gmail.com', 2),
+(34, 'hailinh', 'e2fc714c4727ee9395f324cd2e7f331f', 'hailinh@gmail.com', 2),
+(35, 'phamhieu', '09d674562084500494ec3d746204a875', 'phamhieu@gmail.com', 2);
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -143,6 +187,12 @@ ALTER TABLE `category`
 --
 ALTER TABLE `comment`
   ADD PRIMARY KEY (`comment_id`);
+
+--
+-- Chỉ mục cho bảng `liked`
+--
+ALTER TABLE `liked`
+  ADD PRIMARY KEY (`user_id`,`post_id`);
 
 --
 -- Chỉ mục cho bảng `post`
@@ -164,7 +214,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT cho bảng `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `comment_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `comment_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT cho bảng `post`
@@ -176,7 +226,7 @@ ALTER TABLE `post`
 -- AUTO_INCREMENT cho bảng `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(40) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `user_id` int(40) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
