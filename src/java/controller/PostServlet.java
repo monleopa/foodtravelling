@@ -9,6 +9,7 @@ import DAO.PostDao;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -46,7 +47,8 @@ public class PostServlet extends HttpServlet {
 
         String postName = request.getParameter("postname");
         String postLocation = request.getParameter("location");
-        String postContent = request.getParameter("content");
+        String postContent = request.getParameter("content");    
+        
         String category = request.getParameter("category");
         
         long postCategory = 2;
@@ -55,12 +57,20 @@ public class PostServlet extends HttpServlet {
         }
         System.out.println(postName);
         Part part = request.getPart("postfile");
+        if(part == null){
+            response.sendRedirect("index.jsp");
+        }
         
         String fileName = extractFileName(part);
-        String savePath = "C:\\Users\\User\\Documents\\NetBeansProjects\\Example\\web\\PostImages" + File.separator + fileName;
+        if(fileName.equals("")){
+            request.setAttribute("error2", "Phải đăng kèm ảnh");
+
+            RequestDispatcher rq = request.getRequestDispatcher("index.jsp");
+            rq.forward(request, response);
+        }
+        String savePath = "C:\\Users\\User\\Downloads\\DemoWeb\\build\\web\\PostImages" + File.separator + fileName;
         File fileSave = new File(savePath);
         part.write(savePath + File.separator);
-        System.out.println("haha");
         HttpSession session =  request.getSession();
         
         User user = new User();

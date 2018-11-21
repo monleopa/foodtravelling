@@ -21,15 +21,42 @@
         <% PostDao pd = new PostDao(); %>
         <% for(Post p : pd.getListPost(param)){%>
             <div class="upload">
-                <div class="postusername" style="color: #365899;"><b><%= p.getPostUserName() %></b></div>
+                <div class="postusername">
+                    <a href="home.jsp?userID=<%=p.getPostUserId()%>" class="link-user"><b><%= p.getPostUserName()%></b></a>
+                </div>
                 <div class="upload-nalo">
                     <div class="upload-name"><b><%=p.getPostName()%></b></div>
-                    <div class="upload-location"><%=p.getPostLocation()%></div>
+                    <div class="upload-location"><%=p.getPostLocation()%>
+                        <%
+                            User user = new User();
+                            user = (User) session.getAttribute("user");
+                            if(user.getUserID() == p.getPostUserId()){
+                        %>
+                        <form action="DeletePostServlet" method="POST">
+                            <button type="submit" name="btnDelete" value="<%=p.getPostID()%>">Delete</button>
+                        </form>
+                        <%}%>
+                    </div>
                 </div>
                 <br><br>
-    
-                <div class="post-article">
-                    <div class="post-content"><%=p.getPostContent()%></div>
+                
+                <%
+                    int a = p.getPostContent().length();
+                    int b;
+                    int h;
+                    int h2=530;
+                    if(a % 80 == 0){
+                        b = a/80;
+                    }else {
+                        b = a/80 + 1;
+                    }
+                    h = b * 16;
+                    if(b > 2){
+                        h2 = 530 + 16*(b-1);
+                    }
+                %>
+                <div class="post-article" style="height: <%=h2%>px;">
+                    <div class="post-content" style="height: <%=h%>px;"><%=p.getPostContent()%></div>
                     <a href="DetailUpload.jsp?postID=<%=p.getPostID()%>">
                         <div class="post-img" style="background-image: url('PostImages/<%=p.getPostFileName()%>')"></div>
                     </a>
@@ -39,8 +66,6 @@
                     <div style="width: 100%;">
                         <div class="fix-btn"></div>
                         <%
-                            User user = new User();
-                            user = (User) session.getAttribute("user");
                             if(PostDao.checkLiked(user, p.getPostID())){
                         %>
                             <button type="submit" class="btn" onclick="return liked(<%=p.getPostID()%>)" value="0" id="<%="btn"+p.getPostID()%>">
@@ -92,5 +117,14 @@
             http.send(params);
             http.onload;
         }
+    }
+    
+    function deletePost(a){
+        var http = new XMLHttpRequest();
+        http.open("POST", "http://localhost:8080/DemoWeb/delete.jsp", true);
+        http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        var params = "paramDelete=" + a;
+        http.send(params);
+        http.onload;
     }
 </script>

@@ -33,10 +33,7 @@ public class CategoryDAO {
         return list;
     }
     
-    public static void main(String[] args) throws SQLException {
-        CategoryDAO dao = new CategoryDAO();
-        for(Category ds : dao.getListCategory()){
-            System.out.println(ds.getCateID()+"   "+ds.getCateName());
-        }
+    public static void main(String[] args) {
+        System.out.println(5%10);
     }
 }

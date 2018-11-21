@@ -55,7 +55,7 @@
                         <br><br>
                         <input type="password" placeholder="  Password" name="pass" id="pass" class="custom-size">
                         <br><br>
-                        <input type="password" placeholder="Confirm Password" name="copass" id="pass" class="custom-size">
+                        <input type="password" placeholder="  Confirm Password" name="copass" id="pass" class="custom-size">
                         <br><br>
                         <br><br>
                         <input type="hidden" value="insert" name="command">

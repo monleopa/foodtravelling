@@ -20,7 +20,6 @@
     </head>
     <body>
         <jsp:include page="header.jsp"></jsp:include>
-        <br><br><br><br>
         <% 
             User user = new User();
             if(session.getAttribute("user") != null)
@@ -35,7 +34,7 @@
                     post = pd.getPost(postID);
                 }
         %>
-        
+        <br><br><br><br>
         <div class="post">
             <div class="fix-detail-post"></div>
             <div class="detail-post">  
@@ -81,7 +80,19 @@
                         for(Comment cmt : CommentDao.getListComment(post.getPostID())){
                     %>
                     <center>
-                        <div class="zone-comment">
+                        <% 
+                            int a = cmt.getCommentContent().length();
+                            int h;
+                            int b;
+                            if(a%55 == 0){
+                                b = a/55;
+                            }
+                            else{
+                                b = a/55+1;
+                            }
+                            h = b*15;
+                        %>
+                        <div class="zone-comment" style="height: <%=h%>px;">
                             <div class="username-comment">
                                 <b><%= cmt.getUserCommentName() %></b>
                             </div>

@@ -31,9 +31,9 @@
     width: 93%;
     font-size: 14px;
     background-color: #E9EBEE;
-    min-height: 30px;
     border-radius: 20px;
     position: relative;
+    padding: 5px 0 5px 0;
 }
 
 .username-comment{
@@ -44,11 +44,9 @@
     margin-left: 20px;
     min-height: 30px;
     position: relative;
-    margin-top: 7px;
 }
 
 .content-comment{
-    margin-top: 7px;
     width: 75%;
     float: left;
     text-align: left;

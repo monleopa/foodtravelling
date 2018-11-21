@@ -90,15 +90,15 @@ public class UserServlet extends HttpServlet {
                     RequestDispatcher rq = request.getRequestDispatcher(url);
                     rq.forward(request, response);
                 }
-                Pattern regexPass = Pattern.compile("[$&+,:;=?@#|'<>.-^*()%!]");
-                Matcher matcherPass = regexPass.matcher(password);
-                if (matcherPass.find()) {
-                    request.setAttribute("error", "Password không được chứa ký tự đặc biệt ");
-                    request.setAttribute("uname", uname);
-
-                    RequestDispatcher rq = request.getRequestDispatcher(url);
-                    rq.forward(request, response);
-                }
+//                Pattern regexPass = Pattern.compile("[$&+,:;=?@#|'<>.-^*()%!]");
+//                Matcher matcherPass = regexPass.matcher(password);
+//                if (matcherPass.find()) {
+//                    request.setAttribute("error", "Password không được chứa ký tự đặc biệt ");
+//                    request.setAttribute("uname", uname);
+//
+//                    RequestDispatcher rq = request.getRequestDispatcher(url);
+//                    rq.forward(request, response);
+//                }
                 if (!cfpassword.equals(password)) {
                     request.setAttribute("error", "Confirm password is wrong");
                     request.setAttribute("email", email);
@@ -107,17 +107,17 @@ public class UserServlet extends HttpServlet {
                     rq.forward(request, response);
                 }
 
-                if (!email.equals("") && email != null && !password.equals("") && password != null && !uname.equals("") && uname != null && !matcherPass.find() && cfpassword.equals(password)) {
+                if (!email.equals("") && email != null && !password.equals("") && password != null && !uname.equals("") && uname != null && cfpassword.equals(password)) {
                     String pass = MD5.encryption(request.getParameter("pass"));
-                    getUser = userDao.login(email, pass);
-                    if (getUser != null) {
-                        request.setAttribute("error", "Tài khoản đã tồn tại");
+                    boolean checkemail = userDao.checkEmail(email);
+                    if (checkemail == true) {
+                        request.setAttribute("error", "Email đã tồn tại");
                         request.setAttribute("email", email);
                         request.setAttribute("uname", uname);
                         RequestDispatcher rq = request.getRequestDispatcher(url);
                         rq.forward(request, response);
                     } else {
-                        user.setEmail(email);
+                        user.setEmail(email);   
                         user.setUsername(uname);
 
                         user.setPassword(pass);

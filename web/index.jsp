@@ -28,6 +28,8 @@
         <br><br><br><br>
         <% if(user != null){ %>  
         <center>
+            <h5 style="color: red"><%= request.getAttribute("error2") != null ? request.getAttribute("error2") : " "%></h5><br>
+            
             <div class="show-post2">
                 <div class="show-post3">
                     <img src="img/pencil.svg" width="12px" height="12px">

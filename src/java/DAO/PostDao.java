@@ -134,6 +134,18 @@ public class PostDao {
         st.executeUpdate(sql);
     }
     
+    public static void deletePost(String postID){
+        Connection con = JDBCConnection.getJDBCConnection();
+        String sql = "DELETE FROM post WHERE post_id = '" + postID + "'";
+        Statement st;
+        try {
+            st = con.createStatement();
+            st.executeUpdate(sql);
+        } catch (SQLException ex) {
+            Logger.getLogger(PostDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public static String countlikePost(long postID){
         Connection con = JDBCConnection.getJDBCConnection();
         String sql = "SELECT COUNT(*) FROM liked WHERE post_id = '"+postID+"'";

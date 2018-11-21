@@ -4,6 +4,6 @@
     String idPost = request.getParameter("param1");
     User user = new User();
     user = (User) session.getAttribute("user");
-    System.out.println("hehe");
     PostDao.dislikePost(user, idPost);
+    response.sendRedirect("index.jsp");
 %>

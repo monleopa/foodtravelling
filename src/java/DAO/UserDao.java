@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -81,5 +82,71 @@ public class UserDao {
         }
         return null;
     }
-
+    
+    public static User getUser(String userID){
+        Connection con = JDBCConnection.getJDBCConnection();
+        String sql = "SELECT * FROM user WHERE user_id='" + userID + "'";
+        PreparedStatement ps;
+        try {
+            ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                User u = new User();
+                u.setUserID(rs.getLong("user_id"));
+                u.setEmail(rs.getString("email"));
+                u.setUsername(rs.getString("user_name"));
+                u.setPassword(rs.getString("user_password"));
+                u.setAdmin(rs.getLong("admin"));
+                con.close();
+                System.out.println(u.getUserID());
+                return u;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return null;
+    }
+    
+    public static void follow(long followerID, String following) throws SQLException{
+        Connection con = JDBCConnection.getJDBCConnection();
+//        long followerID = Long.parseLong(follower);
+        long followingID = Long.parseLong(following);
+        String sql = "insert into relationship(follower_id, following_id) values(?,?)";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setLong(1, followerID);
+        ps.setLong(2, followingID);
+        ps.executeUpdate();
+    }
+    
+    public static void unfollow(long followerID, String following) throws SQLException{
+        Connection con = JDBCConnection.getJDBCConnection();
+        System.out.println("kiem tra unfollow");
+//       long followerID = Long.parseLong(follower);
+//        long followingID = Long.parseLong(following);
+        String sql = "DELETE FROM relationship WHERE follower_id = '" + followerID + "' AND following_id = '"+following+"'";
+        Statement st = con.createStatement();
+        st.executeUpdate(sql);
+    }
+    
+        public static boolean checkFollow(long follower, long following){
+        Connection con = JDBCConnection.getJDBCConnection();
+        String sql = "SELECT * FROM relationship WHERE follower_id = '" + follower + "' AND following_id = '"+following+"'";
+        System.out.println("3333");
+        PreparedStatement ps;
+        try {
+            ps = con.prepareCall(sql);
+            ResultSet rs = ps.executeQuery();
+            System.out.println("6555555");
+            while (rs.next()) {
+                System.out.println("4444444");
+                con.close();
+                return false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PostDao.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return true;
+    }
+    
 }
