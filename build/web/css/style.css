@@ -148,6 +148,7 @@ body{
 
 .btn-post:hover{
     cursor: pointer;
+    background-color: #F63E0C;
 }
 
 .fix-detail-post{

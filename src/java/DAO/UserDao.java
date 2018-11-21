@@ -44,7 +44,6 @@ public class UserDao {
         Connection con = JDBCConnection.getJDBCConnection();
         PreparedStatement ps = null;
         try {
-            System.out.println(u.getUsername() + u.getEmail());
             String sql = "insert into user(user_name,user_password,email,admin) values(?,?,?,?)";
             ps = con.prepareStatement(sql);
             ps.setString(1, u.getUsername());

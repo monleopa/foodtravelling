@@ -21,24 +21,54 @@
         <% PostDao pd = new PostDao(); %>
         <% for(Post p : pd.getListPost(param)){%>
             <div class="upload">
-                <div class="postusername">
-                    <a href="home.jsp?userID=<%=p.getPostUserId()%>" class="link-user"><b><%= p.getPostUserName()%></b></a>
-                </div>
-                <div class="upload-nalo">
-                    <div class="upload-name"><b><%=p.getPostName()%></b></div>
-                    <div class="upload-location"><%=p.getPostLocation()%>
-                        <%
-                            User user = new User();
-                            user = (User) session.getAttribute("user");
-                            if(user.getUserID() == p.getPostUserId()){
-                        %>
-                        <form action="DeletePostServlet" method="POST">
-                            <button type="submit" name="btnDelete" value="<%=p.getPostID()%>">Delete</button>
-                        </form>
-                        <%}%>
+                <div class="header-upload">
+                    <div class="avatar-post">
+                        <img src="img/avatar-default.png" width="40px" height="40px">
+                    </div>
+                    <div class="postusername">
+                        <a href="home.jsp?userID=<%=p.getPostUserId()%>" class="link-user"><b><%= p.getPostUserName()%></b></a>
+                    </div>
+                    <div class="option-upload">
+                        <button class="btn-option"><b>...</b></button>
+                        <div class="dropdown-option">
+                            <%
+                                User user = new User();
+                                user = (User) session.getAttribute("user");
+                                if(user.getUserID() == p.getPostUserId()){
+                            %>
+                                <form action="DeletePostServlet" method="POST">
+                                    <button type="submit" name="btnDelete" value="<%=p.getPostID()%>" class="btn-option-detail">
+                                        <b>Delete Post</b>
+                                    </button>
+                                </form>
+                                <form>
+                                    <button type="submit" name="btnUpdate" class="btn-option-detail">
+                                        <b>Edit Post</b>
+                                    </button>
+                                </form>
+                            <%} else {%>
+                                <button type="submit" name="<%="btnRP"+p.getPostID()%>" class="btn-option-detail" onclick="openReport(<%=p.getPostID()%>)">
+                                    <b>Report Post</b>
+                                </button>
+                            <% } %>
+                        </div>
                     </div>
                 </div>
-                <br><br>
+                
+                <div class="report-form" id="<%="btnRP"+p.getPostID()%>" >
+                    <h4 style="margin: 5px 0 5px 5px">Report this Post</h4>
+                    <form id="<%="formRP"+p.getPostID()%>" name="<%="formRP"+p.getPostID()%>" action="ReportServlet" method="POST">
+                        <textarea name="contentRP" form="<%="formRP"+p.getPostID()%>" placeholder=" Why are you report" class="content-report"></textarea> <br>
+                        <input type="hidden" value="<%=p.getPostID()%>" name="reportPostID">
+                        <input type="submit" value="Report" class="btn-report">
+                        <button type="button" onclick="closeReport(<%=p.getPostID()%>)" class="btn-closerp">Close</button>
+                    </form>
+                </div>
+                    
+                <div class="upload-nalo">
+                    <div class="upload-name"><b><%=p.getPostName()%></b></div>
+                    <div class="upload-location"><%=p.getPostLocation()%></div>
+                </div>
                 
                 <%
                     int a = p.getPostContent().length();
@@ -119,12 +149,15 @@
         }
     }
     
-    function deletePost(a){
-        var http = new XMLHttpRequest();
-        http.open("POST", "http://localhost:8080/DemoWeb/delete.jsp", true);
-        http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-        var params = "paramDelete=" + a;
-        http.send(params);
-        http.onload;
+    function openReport(a){
+        var btnRP = "btnRP"+a;
+        console.log(btnRP);
+        document.getElementById(btnRP).style.display = "block";
+    }
+    
+    function closeReport(a){
+        var btnRP = "btnRP"+a;
+        console.log(btnRP);
+        document.getElementById(btnRP).style.display = "none";
     }
 </script>

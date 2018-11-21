@@ -64,7 +64,6 @@ public class PostServlet extends HttpServlet {
         String fileName = extractFileName(part);
         if(fileName.equals("")){
             request.setAttribute("error2", "Phải đăng kèm ảnh");
-
             RequestDispatcher rq = request.getRequestDispatcher("index.jsp");
             rq.forward(request, response);
         }
