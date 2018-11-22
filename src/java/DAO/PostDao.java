@@ -79,24 +79,30 @@ public class PostDao {
         return list;
     }
 
-    public Post getPost(String postID) throws SQLException {
-        Connection con = JDBCConnection.getJDBCConnection();
-        String sql = "SELECT * FROM post WHERE post_id = '" + postID + "'";
-        PreparedStatement ps = con.prepareCall(sql);
-        ResultSet rs = ps.executeQuery();
-        Post post = new Post();
-        while (rs.next()) {
-            post.setPostID(rs.getLong("post_id"));
-            post.setPostName(rs.getString("post_name"));
-            post.setPostLocation(rs.getString("post_location"));
-            post.setPostContent(rs.getString("post_content"));
-            post.setPostFileName(rs.getString("post_filename"));
-            post.setPostImage(rs.getString("post_image"));
-            post.setPostCategory(rs.getLong("post_category"));
-            post.setPostUserName(rs.getString("user_name"));
-            post.setPostUserId(rs.getLong("user_id"));
+    public static Post getPost(String postID) {
+        try {
+            Connection con = JDBCConnection.getJDBCConnection();
+            String sql = "SELECT * FROM post WHERE post_id = '" + postID + "'";
+            PreparedStatement ps = con.prepareCall(sql);
+            ResultSet rs = ps.executeQuery();
+            Post post = new Post();
+            while (rs.next()) {
+                post.setPostID(rs.getLong("post_id"));
+                post.setPostName(rs.getString("post_name"));
+                post.setPostLocation(rs.getString("post_location"));
+                post.setPostContent(rs.getString("post_content"));
+                post.setPostFileName(rs.getString("post_filename"));
+                post.setPostImage(rs.getString("post_image"));
+                post.setPostCategory(rs.getLong("post_category"));
+                post.setPostUserName(rs.getString("user_name"));
+                post.setPostUserId(rs.getLong("user_id"));
+            }
+            return post;
+        } catch (SQLException ex) {
+            Logger.getLogger(PostDao.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return post;
+        
+        return null;
     }
     
     public static void likePost(User user, String postID) throws SQLException{
@@ -134,16 +140,20 @@ public class PostDao {
         st.executeUpdate(sql);
     }
     
-    public static void deletePost(String postID){
+    public static boolean deletePost(String postID){
         Connection con = JDBCConnection.getJDBCConnection();
         String sql = "DELETE FROM post WHERE post_id = '" + postID + "'";
         Statement st;
         try {
             st = con.createStatement();
             st.executeUpdate(sql);
+            System.out.println("4444");
+            return true;
         } catch (SQLException ex) {
             Logger.getLogger(PostDao.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        return false;
     }
     
     public static String countlikePost(long postID){
@@ -185,4 +195,23 @@ public class PostDao {
 //    public static void main(String[] args) throws SQLException {
 //        System.out.println(PostDao.countCommentPost(23));
 //    }
+    
+    public static boolean EditPost(Post post){
+        Connection con = JDBCConnection.getJDBCConnection();
+        String sql = "UPDATE post set post_name=?,post_location=?,post_content=?,post_category=? WHERE post_id='"+post.getPostID()+"'";
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, post.getPostName());
+            ps.setString(2, post.getPostLocation());
+            ps.setString(3, post.getPostContent());
+            ps.setLong(4, post.getPostCategory());
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(PostDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return false;
+    }
 } 

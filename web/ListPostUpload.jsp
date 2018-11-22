@@ -14,6 +14,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <link href="css/post.css" rel="stylesheet" type="text/css" media="all" />
+        
     </head>
     <body>
              
@@ -41,11 +42,10 @@
                                         <b>Delete Post</b>
                                     </button>
                                 </form>
-                                <form>
-                                    <button type="submit" name="btnUpdate" class="btn-option-detail">
-                                        <b>Edit Post</b>
-                                    </button>
-                                </form>
+                                        
+                                <button type="submit" name="<%="btnUpdate"+p.getPostID()%>" class="btn-option-detail" onclick="openEdit(<%=p.getPostID()%>)">
+                                    <b>Edit Post</b>
+                                </button>
                             <%} else {%>
                                 <button type="submit" name="<%="btnRP"+p.getPostID()%>" class="btn-option-detail" onclick="openReport(<%=p.getPostID()%>)">
                                     <b>Report Post</b>
@@ -55,6 +55,22 @@
                     </div>
                 </div>
                 
+                <div class="edit-form" id="<%="btnEdit"+p.getPostID()%>" style="display: none;">
+                    <center>
+                        <form method="POST" action="EditPostServlet" id="<%="edit"+p.getPostID()%>">
+                            <input type="text" name="editName" id="nameOf" class="fix-post" value="<%=p.getPostName()%>"/>
+                            <input type="text" name="editLocation" class="fix-post" value="<%=p.getPostLocation()%>" <br><br><br>
+                            <textarea name="editContent" form="<%="edit"+p.getPostID()%>" class="text-post"><%=p.getPostContent()%></textarea><br>
+                            <input type="hidden" value="<%=p.getPostID()%>" name="editPostID">
+                            <div class="fix-post2">
+                                <input type="checkbox" name="editCategory" id="category" onclick="myCheck()" value="1"/> Food/Travelling
+                                <input type="submit" value="Edit" class="btn-edit" />
+                                <input type="button" value="Close" class="btn-closeed" onclick="closeEdit(<%=p.getPostID()%>)"/>
+                            </div>
+                        </form>
+                    </center>
+                </div>
+                                                
                 <div class="report-form" id="<%="btnRP"+p.getPostID()%>" >
                     <h4 style="margin: 5px 0 5px 5px">Report this Post</h4>
                     <form id="<%="formRP"+p.getPostID()%>" name="<%="formRP"+p.getPostID()%>" action="ReportServlet" method="POST">
@@ -65,7 +81,7 @@
                     </form>
                 </div>
                     
-                <div class="upload-nalo">
+                <div class="upload-nalo" id="<%="nalo"+p.getPostID()%>">
                     <div class="upload-name"><b><%=p.getPostName()%></b></div>
                     <div class="upload-location"><%=p.getPostLocation()%></div>
                 </div>
@@ -86,7 +102,7 @@
                     }
                 %>
                 <div class="post-article" style="height: <%=h2%>px;">
-                    <div class="post-content" style="height: <%=h%>px;"><%=p.getPostContent()%></div>
+                    <div class="post-content" id="<%="content"+p.getPostID() %>" style="height: <%=h%>px;"><%=p.getPostContent()%></div>
                     <a href="DetailUpload.jsp?postID=<%=p.getPostID()%>">
                         <div class="post-img" style="background-image: url('PostImages/<%=p.getPostFileName()%>')"></div>
                     </a>
@@ -151,13 +167,29 @@
     
     function openReport(a){
         var btnRP = "btnRP"+a;
-        console.log(btnRP);
         document.getElementById(btnRP).style.display = "block";
     }
     
     function closeReport(a){
         var btnRP = "btnRP"+a;
-        console.log(btnRP);
         document.getElementById(btnRP).style.display = "none";
+    }
+    
+    function openEdit(a){
+        var btnEdit = "btnEdit"+a;
+        var nalo = "nalo"+a;
+        var content = "content"+a;
+        document.getElementById(btnEdit).style.display = "block";
+        document.getElementById(nalo).style.display = "none";
+        document.getElementById(content).style.display = "none";
+    }
+    
+    function closeEdit(a){
+        var btnEdit = "btnEdit"+a;
+        var nalo = "nalo"+a;
+        var content = "content"+a;
+        document.getElementById(btnEdit).style.display = "none";
+        document.getElementById(nalo).style.display = "block";
+        document.getElementById(content).style.display = "block";  
     }
 </script>

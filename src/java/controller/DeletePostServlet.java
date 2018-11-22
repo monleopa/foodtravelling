@@ -8,6 +8,7 @@ package controller;
 import DAO.PostDao;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,7 +26,14 @@ public class DeletePostServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String postID = request.getParameter("btnDelete");
-        PostDao.deletePost(postID);
-        response.sendRedirect("index.jsp");
+        if(PostDao.deletePost(postID) == true){
+            response.sendRedirect("index.jsp");
+        }
+        else{
+            request.setAttribute("error2", "Delete Not Success");
+            RequestDispatcher rq = request.getRequestDispatcher("index.jsp");
+            rq.forward(request, response);
+        }
+        
     }
 }

@@ -6,6 +6,7 @@
 package controller;
 
 import DAO.PostDao;
+import DAO.ReportDao;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -30,20 +31,13 @@ import model.User;
     maxFileSize = 1024 * 1024 *10,
     maxRequestSize = 1024 * 1024 * 5)
 public class PostServlet extends HttpServlet {
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
-    }
-
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset = UTF-8");
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
-        PrintWriter out = response.getWriter();
 
         String postName = request.getParameter("postname");
         String postLocation = request.getParameter("location");
@@ -55,7 +49,7 @@ public class PostServlet extends HttpServlet {
         if(category == null){
             postCategory = 1;
         }
-        System.out.println(postName);
+        
         Part part = request.getPart("postfile");
         if(part == null){
             response.sendRedirect("index.jsp");
@@ -84,9 +78,16 @@ public class PostServlet extends HttpServlet {
         post.setPostFileName(fileName);
         post.setPostUserId(user.getUserID());
         post.setPostUserName(user.getUsername());
-        PostDao.UploadPost(post);
         
-        response.sendRedirect("index.jsp");
+        if(PostDao.UploadPost(post) == true ){
+            response.sendRedirect("index.jsp");
+        }
+        else{
+            request.setAttribute("error2", "Not Success");
+            RequestDispatcher rq = request.getRequestDispatcher("index.jsp");
+            rq.forward(request, response);
+        }
+//        response.sendRedirect("index.jsp");
 //        out.println("<h1>Thanh Cong</h1>");
         
     }
