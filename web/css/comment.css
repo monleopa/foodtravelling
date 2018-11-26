@@ -1,5 +1,5 @@
 .input-comment{
-    width: 75%;
+    width: 79%;
     float: left;
 }
 
@@ -28,28 +28,40 @@
 }
 
 .zone-comment{
-    width: 93%;
+    width: 98%;
     font-size: 14px;
     background-color: #E9EBEE;
-    border-radius: 20px;
-    position: relative;
+    border-radius: 10px;
     padding: 5px 0 5px 0;
 }
 
 .username-comment{
     color: #365899;
-    width: 20%;
+    width: 18%;
     float: left;
     text-align: left;
-    margin-left: 20px;
-    min-height: 30px;
-    position: relative;
+    margin-left: 10px;
 }
 
 .content-comment{
-    width: 75%;
+    width: 70%;
     float: left;
     text-align: left;
-    min-height: 30px;
-    position: relative;
+}
+
+.form-edit-comment{
+    width: 70%;
+    height: 100%;
+    float: left;
+    text-align: left;
+    display: none;
+}
+
+.delete-comment{
+    width: 5%;
+    float: left;
+}
+
+.edit-comment{
+    float: left;
 }

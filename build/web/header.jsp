@@ -29,8 +29,13 @@
                     </div>
 
                     <div class="header-menu">
-                        <ul class="">
-<!--                            <li><a href="index.jsp"><b>HOME</b></a></li>-->
+                        <ul>
+                            <%
+                                if(user.getAdmin() == 1 ){
+                            %>
+                            <li><a href="admin.jsp"><b>ADMIN</b> </a></li>
+                            <% } %>
+                            
                             <li><a href="home.jsp?userID=<%=user.getUserID()%>" style="text-transform: uppercase;"><b><%= user.getUsername() %></b></a></li>
                             <li><a href="FoodPost.jsp" value="1" name="food"><b>FOOD</b></a></li>
                             <li><a href="TravellingPost.jsp" value="2" name="travelling"><b>TRAVELLING</b> </a></li>

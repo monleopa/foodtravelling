@@ -4,6 +4,7 @@
     Author     : User
 --%>
 
+<%@page import="model.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -14,13 +15,18 @@
     </head>
     <body>
         <jsp:include page="header.jsp"></jsp:include>
-        <br><br><br><br>
+        <% User user = null; %>
+        <% if(session.getAttribute("user") != null){ %>
         <div class="post">
             <div class="fix-detail-post"></div>
             <div class="detail-post">
+                <br><br><br><br>
                 <jsp:include page="ListPostUpload.jsp"><jsp:param name="loadPost" value="food"></jsp:param></jsp:include>
             </div>
             <div class="fix-detail-post"></div>
         </div>
+        <% } else { %>
+            <jsp:include page="signup.jsp"></jsp:include>
+        <% } %>
     </body>
 </html>

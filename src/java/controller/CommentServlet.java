@@ -28,28 +28,32 @@ public class CommentServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-//        response.setContentType("text/html;charset = UTF-8");
-//        request.setCharacterEncoding("UTF-8");
-//        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset = UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
         String content = request.getParameter("content_comment");
-        HttpSession session = request.getSession();
-        User user = new User();
-        user = (User) session.getAttribute("user");
         String pID = request.getParameter("postID");
         long postID = Long.parseLong(pID);
-
-        Comment cmt = new Comment();
-        cmt.setCommentContent(content);
-        cmt.setUserCommentID(user.getUserID());
-        cmt.setUserCommentName(user.getUsername());
-        cmt.setPostID(postID);
-
-        System.out.println(cmt.toString());
-
-        if (CommentDao.AddComment(cmt)) {
+        if(content.equals("")){
             response.sendRedirect("DetailUpload.jsp?postID=" + postID);
-        } else {
-            System.out.println("Error");
+        }
+        else {
+            HttpSession session = request.getSession();
+            User user = new User();
+            user = (User) session.getAttribute("user");
+            Comment cmt = new Comment();
+            cmt.setCommentContent(content);
+            cmt.setUserCommentID(user.getUserID());
+            cmt.setUserCommentName(user.getUsername());
+            cmt.setPostID(postID);
+
+            System.out.println(cmt.toString());
+
+            if (CommentDao.AddComment(cmt)) {
+                response.sendRedirect("DetailUpload.jsp?postID=" + postID);
+            } else {
+                System.out.println("Error");
+            }
         }
 
     }

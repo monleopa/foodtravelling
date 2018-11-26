@@ -8,9 +8,13 @@ package DAO;
 import connect.JDBCConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Category;
 import model.Report;
 
 /**
@@ -35,5 +39,57 @@ public class ReportDao {
             Logger.getLogger(ReportDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
+    }
+    
+    public ArrayList<Report> getListReport() throws SQLException{
+        Connection con = JDBCConnection.getJDBCConnection();
+        String sql = "SELECT * FROM report";
+        PreparedStatement ps = con.prepareCall(sql);
+        ResultSet rs = ps.executeQuery();
+        ArrayList<Report> list = new ArrayList<>();
+        while(rs.next()){
+            Report report = new Report();
+            report.setReportID(rs.getLong("report_id"));
+            report.setReportContent(rs.getString("report_content"));
+            report.setUserID(rs.getLong("user_id"));
+            report.setUserName(rs.getString("user_name"));
+            report.setPostID(rs.getLong("post_id"));
+            report.setReportStatus(rs.getLong("report_status"));
+            list.add(report);
+        }
+        return list;   
+    }
+    
+    public static boolean deleteReport(String postID){
+        Connection con = JDBCConnection.getJDBCConnection();
+        String sqlReport = "DELETE FROM report WHERE post_id = '" + postID + "'";
+        Statement st;
+        try {
+            st = con.createStatement();
+            st.executeUpdate(sqlReport);
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(PostDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return false;
+    }
+    
+        public static String countReport(){
+        Connection con = JDBCConnection.getJDBCConnection();
+        String sql = "SELECT COUNT(*) FROM report WHERE report_status = '0'";
+        Statement st;
+        try {
+            st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            String count = "";
+            while(rs.next()){
+                count = rs.getString(1);
+            }
+            return count;
+        } catch (SQLException ex) {
+            Logger.getLogger(PostDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "0";
     }
 }

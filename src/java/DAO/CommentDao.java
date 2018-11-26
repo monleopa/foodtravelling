@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -56,5 +57,36 @@ public class CommentDao {
             listComment.add(cmt);
         }
         return listComment;
+    }
+    
+    public static boolean deleteComment(String commentID){
+        Connection con = JDBCConnection.getJDBCConnection();
+        String sql = "DELETE FROM comment WHERE comment_id = '" + commentID + "'";
+        Statement st;
+        try {
+            st = con.createStatement();
+            st.executeUpdate(sql);
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(PostDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return false;
+    }
+    
+    public static boolean editComment(String commentID, String content){
+        Connection con = JDBCConnection.getJDBCConnection();
+        String sql = "UPDATE comment set comment_content=? WHERE comment_id='"+commentID+"'";
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, content);
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(PostDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return false;
     }
 }

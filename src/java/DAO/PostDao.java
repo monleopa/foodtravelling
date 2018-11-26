@@ -143,11 +143,16 @@ public class PostDao {
     public static boolean deletePost(String postID){
         Connection con = JDBCConnection.getJDBCConnection();
         String sql = "DELETE FROM post WHERE post_id = '" + postID + "'";
+        String sqlLike = "DELETE FROM liked WHERE post_id = '" + postID + "'";
+        String sqlCmt = "DELETE FROM comment WHERE comment_post_id = '" + postID + "'";
+        String sqlReport = "DELETE FROM report WHERE post_id = '" + postID + "'";
         Statement st;
         try {
             st = con.createStatement();
             st.executeUpdate(sql);
-            System.out.println("4444");
+            st.executeUpdate(sqlLike);
+            st.executeUpdate(sqlCmt);
+            st.executeUpdate(sqlReport);
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(PostDao.class.getName()).log(Level.SEVERE, null, ex);

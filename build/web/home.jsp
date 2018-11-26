@@ -18,6 +18,7 @@
         <jsp:include page="header.jsp"></jsp:include>
         <%
             User user = new User();
+            if(session.getAttribute("user") != null) {
             user = (User) session.getAttribute("user");
             User user2 = new User();
             String postUserId = request.getParameter("userID");
@@ -32,8 +33,8 @@
             <div class="fix-follow2">
                 <div class="name-follow"><b><%=user2.getUsername()%></b></div>
                 <div class="following">
-                    <div class="follow">Following: </div>
-                    <div class="follow">Followers: </div>
+                    <div class="follow">Following: (<%= UserDao.countFollowing(user2.getUserID()) %>) </div>
+                    <div class="follow">Followers: (<%= UserDao.countFollower(user2.getUserID()) %>) </div>
                 </div>
             </div>
             <div class="follow-button">
@@ -54,6 +55,10 @@
             </div>
             <div class="fix-detail-post"></div>
         </div>
+            
+        <% } else {%>
+            <jsp:include page="signup.jsp"></jsp:include>
+        <% } %>
     </body>
 </html>
 
