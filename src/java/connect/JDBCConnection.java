@@ -19,7 +19,7 @@ public class JDBCConnection {
     
     public static Connection getJDBCConnection()
     {
-        final String url = "jdbc:mysql://localhost:3306/demo";
+        final String url = "jdbc:mysql://localhost:3306/demo?useUnicode=true&characterEncoding=utf-8";
         final String user = "root";
         final String password = "";
         try {

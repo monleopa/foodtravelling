@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 22, 2018 lúc 11:17 AM
+-- Thời gian đã tạo: Th10 26, 2018 lúc 02:15 AM
 -- Phiên bản máy phục vụ: 10.1.36-MariaDB
 -- Phiên bản PHP: 7.2.10
 
@@ -90,13 +90,13 @@ CREATE TABLE `liked` (
 
 INSERT INTO `liked` (`user_id`, `post_id`) VALUES
 (1, 23),
-(1, 24),
 (1, 26),
 (1, 29),
 (1, 31),
 (1, 33),
 (1, 34),
 (1, 35),
+(1, 58),
 (2, 23),
 (2, 24),
 (2, 26),
@@ -143,7 +143,9 @@ INSERT INTO `post` (`post_id`, `post_name`, `post_location`, `post_filename`, `p
 (30, 'Vinpearl land', 'Nha Trang', 'vinpearl-land-nha-trang-ticket-4-pm.jpg', 'Lien he 0971366898 de co duoc khach san dep va giai hop ly nhat.', 'C:\\Users\\User\\Documents\\NetBeansProjects\\Example\\web\\PostImages\\vinpearl-land-nha-trang-ticket-4-pm.jpg', 2, 2, 'baphuong'),
 (31, 'Tam Dao', 'Vinh Phuc', 'du-lich-tam-dao-4-400x400.jpg', 'So Beautifull !', 'C:\\Users\\User\\Documents\\NetBeansProjects\\Example\\web\\PostImages\\du-lich-tam-dao-4-400x400.jpg', 2, 29, 'philinhlinh'),
 (32, 'Banh Xeo', '91 Be Van Dan - Ha Dong - Ha Noi', 'photo.jpg', 'Very Good !!!', 'C:\\Users\\User\\Documents\\NetBeansProjects\\Example\\web\\PostImages\\photo.jpg', 1, 31, 'hongnhung'),
-(33, 'Hội An', 'Phố cổ Hội An - Quảng Nam', 'hoi-an-600x600.jpg', 'So So So Beautifull !', 'C:\\Users\\User\\Documents\\NetBeansProjects\\Example\\web\\PostImages\\hoi-an-600x600.jpg', 2, 31, 'hongnhung');
+(33, 'Hội An', 'Phố cổ Hội An - Quảng Nam', 'hoi-an-600x600.jpg', 'So So So Beautifull !', 'C:\\Users\\User\\Documents\\NetBeansProjects\\Example\\web\\PostImages\\hoi-an-600x600.jpg', 2, 31, 'hongnhung'),
+(58, '', '', 'aaa.png', '', 'C:\\Users\\User\\Downloads\\DemoWeb\\build\\web\\PostImages\\?âs.png', 1, 31, 'hongnhung'),
+(59, 'Bánh Mỳ Pew Pew', 'Út Tịch - Tp Hồ Chí Minh', '20-4-480x360.jpg', 'Rất là ngon !!!', 'C:\\Users\\User\\Downloads\\DemoWeb\\build\\web\\PostImages\\20-4-480x360.jpg', 1, 1, 'duc anh');
 
 -- --------------------------------------------------------
 
@@ -281,7 +283,7 @@ ALTER TABLE `comment`
 -- AUTO_INCREMENT cho bảng `post`
 --
 ALTER TABLE `post`
-  MODIFY `post_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `post_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT cho bảng `relationship`

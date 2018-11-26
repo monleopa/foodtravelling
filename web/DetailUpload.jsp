@@ -26,12 +26,11 @@
             {
                 user = (User) session.getAttribute("user");        
                 Post post = new Post();
-                PostDao pd = new PostDao();
                 String postID = "";
 
                 if(request.getParameter("postID") != null){
                     postID = request.getParameter("postID");
-                    post = pd.getPost(postID);
+                    post = PostDao.getPost(postID);
                 }
         %>
         <br><br><br><br>
