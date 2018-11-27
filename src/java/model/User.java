@@ -11,11 +11,39 @@ package model;
  */
 public class User {
     private long userID;
-    private String email, username, password;
+    private String email, username, password,avata,avata_name;
+
+    public String getAvata() {
+        return avata;
+    }
+
+    public void setAvata(String avata) {
+        this.avata = avata;
+    }
+
+    public String getAvata_name() {
+        return avata_name;
+    }
+
+    public void setAvata_name(String avata_name) {
+        this.avata_name = avata_name;
+    }
     private long admin;
 
     public User() {
     }
+
+    public User(long userID, String email, String username, String password, String avata, String avata_name, long admin) {
+        this.userID = userID;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.avata = avata;
+        this.avata_name = avata_name;
+        this.admin = admin;
+    }
+    
+    
 
     public User(long userID, String email, String username, String password, long admin) {
         this.userID = userID;

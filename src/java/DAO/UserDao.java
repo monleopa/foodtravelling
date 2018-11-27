@@ -59,6 +59,46 @@ public class UserDao {
 
         return false;
     }
+    
+    public boolean updateUser(User u){
+        Connection con = JDBCConnection.getJDBCConnection();
+        PreparedStatement ps = null;
+        try {
+//            long id = u.getUserID();
+//            String email = u.getEmail();
+//            String username = u.getUsername();
+            String sql = "update user set email=?, user_name=? where user_id=?;";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, u.getEmail());
+            ps.setString(2, u.getUsername());
+            ps.setLong(3, u.getUserID());
+          
+            ps.executeUpdate(); 
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return false;
+    }
+    
+    public boolean updatePass(long id, String pass){
+        Connection con = JDBCConnection.getJDBCConnection();
+        PreparedStatement ps = null;
+        try {
+            String sql = "update user set user_password=? where user_id=?;";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, pass);
+            ps.setLong(2, id);
+            
+            ps.executeUpdate(); 
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return false;
+    }
 
     public User login(String email, String password) {
         Connection con = JDBCConnection.getJDBCConnection();
