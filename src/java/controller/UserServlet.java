@@ -117,7 +117,7 @@ public class UserServlet extends HttpServlet {
                         RequestDispatcher rq = request.getRequestDispatcher(url);
                         rq.forward(request, response);
                     } else {
-                        user.setEmail(email);   
+                        user.setEmail(email);
                         user.setUsername(uname);
 
                         user.setPassword(pass);
@@ -151,7 +151,77 @@ public class UserServlet extends HttpServlet {
 //                    userDao.updateUser(user); 
 //                    session.setAttribute("user",user);
 //                    url = "/index.jsp";
-//                    break;
+                break;
+            case "updatePass": {
+                String url1 = "changePass.jsp";
+                User user2 = new User();
+                user2 = (User) session.getAttribute("user");
+                String password1 = user2.getPassword();
+                long id1 = user2.getUserID();
+                System.out.println(user2.getUserID());
+                String oldPass = request.getParameter("oldPass");
+                String newPass = request.getParameter("newPass");
+                String cfnewPass = request.getParameter("cfnewPass");
+                String pass1 = MD5.encryption(oldPass);
+                if (oldPass.equals("") || oldPass == null) {
+                    request.setAttribute("error", "OldPass không được để null");
+                   
+                    RequestDispatcher rq = request.getRequestDispatcher(url1);
+                    rq.forward(request, response);
+                }
+                if (!password1.equals(pass1)) {
+                    request.setAttribute("error", "Sai mật khẩu!");
+                    RequestDispatcher rq = request.getRequestDispatcher(url1);
+                    rq.forward(request, response);
+                }
+                if (newPass.equals("") || newPass == null) {
+                    request.setAttribute("error", "NewPass không được để null");
+                   
+                    RequestDispatcher rq = request.getRequestDispatcher(url1);
+                    rq.forward(request, response);
+                }
+                if (!cfnewPass.equals(newPass)) {
+                    request.setAttribute("error", "Xác nhận mật khẩu sai!");
+                    RequestDispatcher rq = request.getRequestDispatcher(url1);
+                    rq.forward(request, response);
+                }
+
+                if (password1.equals(pass1) && cfnewPass.equals(newPass)) {
+                    String passnew = MD5.encryption(newPass);
+                    userDao.updatePass(id1, passnew);
+                    RequestDispatcher rq = request.getRequestDispatcher(url);
+                    rq.forward(request, response);
+                    break;
+                }
+
+            }
+            case "update": {
+                String newemail = request.getParameter("email");
+                String newuname = request.getParameter("uname");
+//                String id = request.getParameter("userID");
+//                long num = Long.parseLong(id);
+                User user1 = new User();
+                user1 = (User) session.getAttribute("user");
+                System.out.println(user1.getUserID());
+//                user1.setUserID(num);
+                user1.setEmail(newemail);
+                user1.setUsername(newuname);
+                long id = user1.getUserID();
+
+//                userDao.updateUser(user1);
+                UserDao userDao1 = new UserDao();
+                try {
+                    if (userDao1.updateUser(user1)) {
+                        response.sendRedirect("index.jsp");
+                    } else {
+                        response.sendRedirect("error.jsp");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            }
+            
         }
     }
 
