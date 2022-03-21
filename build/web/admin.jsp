@@ -35,7 +35,7 @@
         %>
         <br><br><br><br>
     <center>
-        <button class="btnadmin btn-posts" onclick="showPost()"><b>Posts Management</b></button>
+        <button class="btnadmin btn-posts" onclick="showPost()"><b>Posts Management Test</b></button>
         <button class="btnadmin btn-users" onclick="showUser()"><b>Users Management</b></button>
         <button class="btnadmin btn-reports" onclick="showReport()"><b>Reports Management (<%=numberRP%>)</b></button>
     </center>
