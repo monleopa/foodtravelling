@@ -19,6 +19,7 @@
             if(session.getAttribute("user") != null)
             {
                 user = (User) session.getAttribute("user");
+                String ttcnUrl = "ttcn.jsp?userID=" + user.getUserID();
             %>    
                 <div class="header-content">
                     <div class="header-search">
@@ -39,6 +40,7 @@
                             <li><a href="home.jsp?userID=<%=user.getUserID()%>" style="text-transform: uppercase;"><b><%= user.getUsername() %></b></a></li>
                             <li><a href="FoodPost.jsp" value="1" name="food"><b>FOOD</b></a></li>
                             <li><a href="TravellingPost.jsp" value="2" name="travelling"><b>TRAVELLING</b> </a></li>
+                            <li><a href="<%=ttcnUrl%>" style=" padding-left: 5px;padding-right: 20px;"><b><img src="PostImages/<%=user.getAvata_name()%>" class="img-circle" width="17px;" alt="ttcn"></b></a></li>
                             <li>
                                 <form action="UserServlet" method="post">
                                     <input type="hidden" value="logout" name="command">

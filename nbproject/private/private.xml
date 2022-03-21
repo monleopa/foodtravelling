@@ -2,13 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/User/Downloads/DemoWeb/src/java/controller/EditPostServlet.java</file>
-            <file>file:/C:/Users/User/Downloads/DemoWeb/src/java/connect/JDBCConnection.java</file>
-            <file>file:/C:/Users/User/Downloads/DemoWeb/web/DetailUpload.jsp</file>
-            <file>file:/C:/Users/User/Downloads/DemoWeb/src/java/DAO/PostDao.java</file>
-            <file>file:/C:/Users/User/Downloads/DemoWeb/web/ListPostUpload.jsp</file>
-            <file>file:/C:/Users/User/Downloads/DemoWeb/src/java/controller/PostServlet.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
